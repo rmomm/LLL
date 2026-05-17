@@ -81,3 +81,77 @@ LLLResult LLL(vector<vector<double>>& B, double delta) {
     result.swaps = swaps;
     return result;
 }
+
+int rankMatrix(vector<vector<double>> A_i) {
+    auto A = A_i;
+    int n = A.size();
+    int m = A[0].size();
+
+    int rank = 0;
+
+    const double EPS = 1e-9;
+
+    for (int col = 0, row = 0; col < m && row < n; col++) {
+        int pivot = row;
+
+        while (pivot < n && fabs(A[pivot][col]) < EPS) {
+            pivot++;
+        }
+
+        if (pivot == n)
+            continue;
+
+        swap(A[row], A[pivot]);
+
+
+
+        for (int i = row + 1; i < n; i++) {
+
+            if (fabs(A[i][col]) > EPS) {
+
+                double factor = A[i][col] / A[row][col];
+
+                for (int j = col; j < m; j++) {
+                    A[i][j] -= factor * A[row][j];
+                }
+            }
+        }
+
+        row++;
+        rank++;
+    }
+
+    return rank;
+}
+
+vector<vector<vector<double>>> generateMatrix() {
+
+    int n = 30;
+    int count = 50;
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dist(-20, 20);
+    vector<vector<vector<double>>> mats;
+
+    while (mats.size() < count) {
+
+        vector<vector<double>> A(n, vector<double>(n));
+
+        for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+                A[i][j] = dist(gen);
+            }
+        }
+
+        if (rankMatrix(A) == n) {
+
+            mats.push_back(A);
+        }
+    }
+
+    return mats;
+}
+

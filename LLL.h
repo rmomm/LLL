@@ -2,6 +2,9 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <random>
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -18,3 +21,7 @@ struct LLLResult {
     double b1_norm;
 };
 LLLResult LLL(vector<vector<double>>& B, double delta);
+
+
+int rankMatrix(vector<vector<double>> A_i);
+vector<vector<vector<double>>> generateMatrix();
