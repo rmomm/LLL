@@ -3,8 +3,6 @@
 #include <cmath>
 #include <algorithm>
 #include <random>
-#include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -25,3 +23,6 @@ LLLResult LLL(vector<vector<double>>& B, double delta);
 
 int rankMatrix(vector<vector<double>> A_i);
 vector<vector<vector<double>>> generateMatrix();
+
+double determinant(vector<vector<double>> A);
+double Hadamard(const vector<vector<double>>& B);

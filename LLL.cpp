@@ -155,3 +155,53 @@ vector<vector<vector<double>>> generateMatrix() {
     return mats;
 }
 
+double determinant(vector<vector<double>> A) {
+    int n = A.size();
+    double det = 1.0;
+
+    for (int col = 0; col < n; col++) {
+
+        int pivot = col;
+
+        while (pivot < n && A[pivot][col] == 0) {
+            pivot++;
+        }
+
+        if (pivot == n)
+            return 0.0;
+
+        if (pivot != col) {
+            swap(A[pivot], A[col]);
+            det *= -1;
+        }
+
+        det *= A[col][col];
+
+        for (int row = col + 1; row < n; row++) {
+
+            double factor = A[row][col] / A[col][col];
+
+            for (int j = col; j < n; j++) {
+                A[row][j] -= factor * A[col][j];
+            }
+        }
+    }
+
+    return fabs(det);
+}
+
+double Hadamard(const vector<vector<double>>& B) {
+    int n = B.size();
+    double det = fabs(determinant(B));
+
+    double p = 1.0;
+
+    for (int i = 0; i < n; i++) {
+        p *= vectorNorm(B[i]);
+    }
+
+    if (p == 0.0)
+        return 0.0;
+
+    return pow(det / p, 1.0 / n);
+}
